@@ -22,7 +22,7 @@ export function DashboardPage() {
 
   return (
     <div>
-      <PageHeader title="Dashboard" subtitle={`Bem-vindo de volta, ${firstName}. Aqui está o panorama comercial.`} />
+      <PageHeader title="Dashboard" subtitle={`Bem-vindo de volta, ${firstName}. Aqui está o panorama da sua carteira de seguros de vida.`} />
 
       <div className="space-y-5 p-4 sm:space-y-6 sm:p-8">
         <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 xl:grid-cols-6">

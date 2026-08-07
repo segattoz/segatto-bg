@@ -15,7 +15,7 @@ export function PipelinePage() {
 
   return (
     <div className="flex h-full flex-col">
-      <PageHeader title="Pipeline" subtitle="Arraste os leads entre as etapas do funil comercial." />
+      <PageHeader title="Pipeline" subtitle="Arraste os leads entre as etapas do funil de vendas de seguro de vida." />
       <div className="flex-1 overflow-hidden">
         <KanbanBoard leads={leads} onStatusChange={handleStatusChange} />
       </div>

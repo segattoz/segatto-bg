@@ -38,7 +38,7 @@ export function LoginPage() {
             <Radio className="h-5 w-5 text-white" strokeWidth={2.5} />
           </div>
           <h1 className="text-lg font-semibold tracking-tight text-ink-900 dark:text-white">Pulse CRM</h1>
-          <p className="mt-1 text-center text-sm text-ink-400">Priorização inteligente de leads pós-reunião</p>
+          <p className="mt-1 text-center text-sm text-ink-400">Priorização inteligente de leads para consultores de seguro de vida</p>
         </div>
 
         <div className="rounded-xl border border-ink-100 bg-white/90 p-6 shadow-[0_1px_2px_rgba(16,24,40,0.04)] backdrop-blur-sm dark:border-ink-800 dark:bg-ink-900/90">

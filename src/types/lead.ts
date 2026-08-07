@@ -13,10 +13,10 @@ export const LEAD_STATUS_LABELS: Record<LeadStatus, string> = {
   novo: 'Novo',
   contato_inicial: 'Contato inicial',
   reuniao_agendada: 'Reunião agendada',
-  proposta: 'Proposta',
-  negociacao: 'Negociação',
-  fechado: 'Fechado',
-  perdido: 'Perdido',
+  proposta: 'Proposta enviada',
+  negociacao: 'Em negociação',
+  fechado: 'Apólice emitida',
+  perdido: 'Não contratado',
 }
 
 export const LEAD_STATUS_ORDER: LeadStatus[] = [

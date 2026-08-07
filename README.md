@@ -1,9 +1,11 @@
 # Pulse CRM — Protótipo
 
-CRM inteligente para priorização de leads pós-reunião. O vendedor envia um único
-áudio com suas percepções após a reunião; o áudio (+ ata + dados dos leads) é
-enviado a um workflow n8n, que devolve um novo ranking (score, temperatura,
-prioridade, justificativa e próxima ação) para cada lead envolvido.
+CRM inteligente para priorização de leads de uma corretora/seguradora de
+**seguro de vida**, pessoa física e planos coletivos empresariais. O consultor
+envia um único áudio com suas percepções após a reunião; o áudio (+ ata +
+dados dos leads) é enviado a um workflow n8n, que devolve um novo ranking
+(score, temperatura, prioridade, justificativa e próxima ação) para cada
+lead envolvido.
 
 ## Stack
 

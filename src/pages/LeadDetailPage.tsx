@@ -58,7 +58,7 @@ export function LeadDetailPage() {
             </CardHeader>
             <CardBody className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Field icon={User} label="Nome do contato" value={lead.contactName} />
-              <Field icon={Briefcase} label="Cargo" value={lead.jobTitle ?? '—'} />
+              <Field icon={Briefcase} label="Profissão / Cargo" value={lead.jobTitle ?? '—'} />
               <Field icon={Phone} label="Telefone" value={lead.phone ?? '—'} />
               <Field icon={Mail} label="E-mail" value={lead.email ?? '—'} />
               <Field icon={Tag} label="Origem" value={lead.source ?? '—'} />

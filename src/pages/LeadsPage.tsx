@@ -23,7 +23,7 @@ export function LeadsPage() {
     <div className="flex h-full flex-col">
       <PageHeader
         title="CRM"
-        subtitle="Todos os seus leads, priorizados automaticamente por score."
+        subtitle="Todos os seus leads de seguro de vida, priorizados automaticamente por score."
         actions={
           <div className="flex items-center rounded-lg border border-ink-200 p-0.5 dark:border-ink-700">
             <ToggleButton active={view === 'list'} onClick={() => setView('list')} icon={<List className="h-3.5 w-3.5" />} label="Lista" />

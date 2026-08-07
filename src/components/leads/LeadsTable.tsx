@@ -115,7 +115,7 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
           <thead>
             <tr className="border-b border-ink-100 bg-ink-50/60 text-left text-xs font-medium uppercase tracking-wide text-ink-400 dark:border-ink-800 dark:bg-ink-800/40">
               <Th label="#" />
-              <SortableTh label="Empresa" sortKey="companyName" active={sortKey} direction={direction} onClick={toggleSort} />
+              <SortableTh label="Cliente" sortKey="companyName" active={sortKey} direction={direction} onClick={toggleSort} />
               <Th label="Contato" />
               <Th label="Telefone" />
               <Th label="E-mail" />

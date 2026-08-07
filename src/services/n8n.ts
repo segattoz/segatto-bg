@@ -95,6 +95,10 @@ const POSITIVE_TERMS = [
   'gostou',
   'avanç',
   'assin',
+  'capital segurado',
+  'apólice',
+  'cobertura',
+  'beneficiári',
 ]
 
 const NEGATIVE_TERMS = [
@@ -108,6 +112,9 @@ const NEGATIVE_TERMS = [
   'não possui',
   'sem orçamento',
   'avaliando',
+  'carência',
+  'doença preexistente',
+  'prêmio alto',
 ]
 
 function findWindow(text: string, term: string, radius = 220): string {
@@ -140,7 +147,7 @@ function buildReason(
 }
 
 function buildNextAction(temperature: Lead['temperature']): { action: string; days: number } {
-  if (temperature === 'hot') return { action: 'Enviar proposta comercial', days: 1 }
+  if (temperature === 'hot') return { action: 'Enviar simulação de apólice e capital segurado', days: 1 }
   if (temperature === 'warm') return { action: 'Entrar em contato em 3 dias', days: 3 }
   return { action: 'Reengajar em 2 semanas', days: 14 }
 }
