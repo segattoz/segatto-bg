@@ -18,6 +18,16 @@ npm install
 npm run dev
 ```
 
+## Deploy (Vercel)
+
+1. Em [vercel.com](https://vercel.com), **Add New Project** → importe `segattoz/segatto-bg`.
+2. Selecione a branch (`main` ou `claude/crm-audio-analysis-prototype-qj3q6z`).
+3. Framework é detectado automaticamente (Vite) — build `npm run build`, output `dist`. Não precisa configurar nada a mais.
+4. **Deploy**. Você recebe uma URL pública (`https://<projeto>.vercel.app`) que funciona em mobile e desktop, com redeploy automático a cada push.
+5. Opcional: para sair do MOCK MODE, adicione em Project Settings → Environment Variables as mesmas chaves de `.env.example` (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_N8N_ANALYZE_MEETING_WEBHOOK`) e faça redeploy.
+
+`vercel.json` já inclui o rewrite necessário para o roteamento client-side (React Router) funcionar em links diretos (ex: `/crm/lead-alfa`).
+
 Sem nenhuma variável de ambiente configurada, o app roda inteiramente sobre
 dados mockados: autenticação simulada (qualquer e-mail/senha) e **MOCK MODE**
 para a análise de reunião (uma resposta de IA sintética é gerada ~1s após
