@@ -1,0 +1,92 @@
+import type { Meeting } from '@/types'
+
+const DEMO_USER_ID = 'demo-user'
+
+export const mockMeetings: Meeting[] = [
+  {
+    id: 'meeting-alfa-beta-gamma',
+    userId: DEMO_USER_ID,
+    title: 'Reunião comercial - Empresa Alfa, Beta e Gamma',
+    meetingDate: '2026-08-05',
+    meetingTime: '14:00',
+    participants: ['Matheus Segatto', 'Marina Costa', 'João Ferreira', 'Bruno Alencar'],
+    leadIds: ['lead-alfa', 'lead-beta', 'lead-gamma'],
+    minutes:
+      'Reunião de acompanhamento com três contas em estágios distintos do funil. Empresa Alfa confirmou orçamento aprovado e interesse em iniciar a implantação ainda em agosto, com a diretora Marina Costa presente durante toda a reunião. Empresa Beta, representada por João Ferreira, aprovou tecnicamente a solução mas informou que depende de validação do time financeiro antes de avançar. Empresa Gamma participou por meio de Bruno Alencar, que não demonstrou urgência e mencionou estar apenas avaliando opções para o próximo trimestre.',
+    observations: 'Follow-up com Beta deve ser feito assim que o financeiro responder.',
+    status: 'processada',
+    analysisSummary:
+      'A reunião demonstrou avanço significativo com a Empresa Alfa e interesse moderado da Empresa Beta, enquanto a Empresa Gamma seguiu sem sinais de urgência.',
+    errorMessage: null,
+    createdAt: '2026-08-05T13:30:00Z',
+    updatedAt: '2026-08-05T18:40:00Z',
+  },
+  {
+    id: 'meeting-kappa',
+    userId: DEMO_USER_ID,
+    title: 'Reunião de validação técnica - Kappa Indústria',
+    meetingDate: '2026-08-03',
+    meetingTime: '10:30',
+    participants: ['Matheus Segatto', 'Eduardo Farias'],
+    leadIds: ['lead-kappa'],
+    minutes:
+      'Apresentação técnica detalhada para o VP de Operações da Kappa Indústria. Eduardo Farias validou os principais requisitos técnicos e confirmou que o comitê de decisão é composto por três pessoas. Solicitou que a proposta comercial fosse endereçada diretamente ao comitê na próxima semana.',
+    observations: null,
+    status: 'processada',
+    analysisSummary: 'Validação técnica concluída com sinal positivo; próximo passo é a apresentação ao comitê.',
+    errorMessage: null,
+    createdAt: '2026-08-03T10:00:00Z',
+    updatedAt: '2026-08-03T15:20:00Z',
+  },
+  {
+    id: 'meeting-nova-prisma',
+    userId: DEMO_USER_ID,
+    title: 'Reunião de fechamento - Nova Logística e Prisma Digital',
+    meetingDate: '2026-07-30',
+    meetingTime: '09:00',
+    participants: ['Matheus Segatto', 'Carla Mendonça', 'Thiago Alves'],
+    leadIds: ['lead-nova', 'lead-prisma'],
+    minutes:
+      'Reunião dupla para fechamento de ciclo. Nova Logística, representada pela CEO Carla Mendonça, assinou o contrato e será usada como referência para o setor. Prisma Digital, com Thiago Alves, comunicou que o orçamento disponível não é compatível com o escopo proposto neste momento.',
+    observations: 'Nova Logística: iniciar onboarding imediatamente.',
+    status: 'processada',
+    analysisSummary: 'Fechamento confirmado com Nova Logística; Prisma Digital perdido por restrição orçamentária.',
+    errorMessage: null,
+    createdAt: '2026-07-30T08:30:00Z',
+    updatedAt: '2026-07-30T14:00:00Z',
+  },
+  {
+    id: 'meeting-vortice-nexus',
+    userId: DEMO_USER_ID,
+    title: 'Follow-up - Vórtice Soluções e Nexus Tech',
+    meetingDate: '2026-08-07',
+    meetingTime: '11:00',
+    participants: ['Matheus Segatto', 'Gustavo Ramos', 'Isabela Torres'],
+    leadIds: ['lead-vortice', 'lead-nexus'],
+    minutes:
+      'Reunião de follow-up com duas contas em estágios de negociação e agendamento. Vórtice Soluções está negociando condições de pagamento com prazo interno para decisão até o final do mês. Nexus Tech demonstrou interesse específico em funcionalidades de automação e pediu uma demonstração customizada.',
+    observations: null,
+    status: 'pendente',
+    analysisSummary: null,
+    errorMessage: null,
+    createdAt: '2026-08-07T11:30:00Z',
+    updatedAt: '2026-08-07T11:30:00Z',
+  },
+  {
+    id: 'meeting-sigma',
+    userId: DEMO_USER_ID,
+    title: 'Kickoff - Sigma Group',
+    meetingDate: '2026-07-12',
+    meetingTime: '15:00',
+    participants: ['Matheus Segatto', 'Lucas Vieira'],
+    leadIds: ['lead-sigma'],
+    minutes:
+      'Reunião inicial com o diretor comercial da Sigma Group para apresentar a proposta de valor e entender o processo de decisão interno.',
+    observations: null,
+    status: 'erro',
+    analysisSummary: null,
+    errorMessage: 'Falha ao processar áudio: arquivo corrompido. Reenvie a gravação para tentar novamente.',
+    createdAt: '2026-07-12T15:30:00Z',
+    updatedAt: '2026-07-12T15:45:00Z',
+  },
+]
