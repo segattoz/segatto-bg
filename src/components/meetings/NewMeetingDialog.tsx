@@ -85,14 +85,17 @@ export function NewMeetingDialog({
 
         <div>
           <Label>Leads envolvidos</Label>
-          <div className="max-h-40 space-y-1 overflow-y-auto rounded-lg border border-ink-200 p-2">
+          <div className="max-h-40 space-y-1 overflow-y-auto rounded-lg border border-ink-200 p-2 dark:border-ink-700">
             {leads.map((lead) => (
-              <label key={lead.id} className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-ink-50">
+              <label
+                key={lead.id}
+                className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm text-ink-700 hover:bg-ink-50 dark:text-ink-200 dark:hover:bg-ink-800"
+              >
                 <input
                   type="checkbox"
                   checked={selectedLeads.includes(lead.id)}
                   onChange={() => toggleLead(lead.id)}
-                  className="h-4 w-4 rounded border-ink-300 text-brand-500 focus:ring-brand-400"
+                  className="h-4 w-4 rounded border-ink-300 text-brand-500 focus:ring-brand-400 dark:border-ink-600 dark:bg-ink-800"
                 />
                 {lead.companyName}
               </label>

@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { AuthProvider, useAuth } from '@/hooks/useAuth'
+import { ThemeProvider } from '@/hooks/useTheme'
 import { AppLayout } from '@/components/layout/AppLayout'
 import { LoginPage } from '@/pages/LoginPage'
 import { DashboardPage } from '@/pages/DashboardPage'
@@ -16,7 +17,7 @@ function ProtectedRoutes() {
 
   if (loading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-ink-50">
+      <div className="flex h-screen items-center justify-center bg-ink-50 dark:bg-ink-950">
         <Spinner className="h-6 w-6 text-brand-500" />
       </div>
     )
@@ -53,11 +54,13 @@ function AppRoutes() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <AppRoutes />
-      </AuthProvider>
-    </BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
+        <AuthProvider>
+          <AppRoutes />
+        </AuthProvider>
+      </BrowserRouter>
+    </ThemeProvider>
   )
 }
 

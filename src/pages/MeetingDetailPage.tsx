@@ -28,16 +28,19 @@ export function MeetingDetailPage() {
   const showAlreadyProcessed = meeting.status === 'processada' && phase === 'idle'
 
   return (
-    <div className="p-8">
-      <Link to="/reunioes" className="mb-4 inline-flex items-center gap-1.5 text-sm text-ink-400 hover:text-ink-700">
+    <div className="p-4 sm:p-8">
+      <Link
+        to="/reunioes"
+        className="mb-4 inline-flex items-center gap-1.5 text-sm text-ink-400 hover:text-ink-700 dark:hover:text-ink-200"
+      >
         <ArrowLeft className="h-3.5 w-3.5" />
         Voltar para reuniões
       </Link>
 
       <div className="mb-6 flex items-start justify-between">
         <div>
-          <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-semibold tracking-tight text-ink-900">{meeting.title}</h1>
+          <div className="flex flex-wrap items-center gap-3">
+            <h1 className="text-xl font-semibold tracking-tight text-ink-900 dark:text-white sm:text-2xl">{meeting.title}</h1>
             <MeetingStatusBadge status={meeting.status} />
           </div>
           <p className="mt-1 flex items-center gap-1.5 text-sm text-ink-400">
@@ -54,24 +57,24 @@ export function MeetingDetailPage() {
               <CardTitle>Ata completa</CardTitle>
             </CardHeader>
             <CardBody>
-              <p className="whitespace-pre-line text-sm leading-relaxed text-ink-700">{meeting.minutes}</p>
+              <p className="whitespace-pre-line text-sm leading-relaxed text-ink-700 dark:text-ink-300">{meeting.minutes}</p>
               {meeting.observations && (
-                <p className="mt-4 rounded-lg bg-ink-50 px-3 py-2 text-xs text-ink-500">
-                  <strong className="font-medium text-ink-600">Observações: </strong>
+                <p className="mt-4 rounded-lg bg-ink-50 px-3 py-2 text-xs text-ink-500 dark:bg-ink-800 dark:text-ink-400">
+                  <strong className="font-medium text-ink-600 dark:text-ink-300">Observações: </strong>
                   {meeting.observations}
                 </p>
               )}
             </CardBody>
           </Card>
 
-          <div className="rounded-xl border border-brand-100 bg-brand-50/40 p-6">
+          <div className="rounded-xl border border-brand-100 bg-brand-50/40 p-4 dark:border-brand-500/20 dark:bg-brand-500/5 sm:p-6">
             <div className="mb-4 flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-brand-600" />
-              <h2 className="text-sm font-semibold text-brand-700">Analisar reunião</h2>
+              <Sparkles className="h-4 w-4 text-brand-600 dark:text-brand-400" />
+              <h2 className="text-sm font-semibold text-brand-700 dark:text-brand-300">Analisar reunião</h2>
             </div>
 
             {phase === 'error' && (
-              <div className="mb-4 flex items-start gap-2.5 rounded-lg bg-negative-100 px-4 py-3 text-sm text-negative-600">
+              <div className="mb-4 flex items-start gap-2.5 rounded-lg bg-negative-100 px-4 py-3 text-sm text-negative-600 dark:bg-negative-500/10 dark:text-negative-400">
                 <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
                 <div>
                   <p className="font-medium">Falha ao processar a reunião</p>
@@ -81,7 +84,7 @@ export function MeetingDetailPage() {
             )}
 
             {meeting.status === 'erro' && phase === 'idle' && meeting.errorMessage && (
-              <div className="mb-4 flex items-start gap-2.5 rounded-lg bg-negative-100 px-4 py-3 text-sm text-negative-600">
+              <div className="mb-4 flex items-start gap-2.5 rounded-lg bg-negative-100 px-4 py-3 text-sm text-negative-600 dark:bg-negative-500/10 dark:text-negative-400">
                 <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
                 <div>
                   <p className="font-medium">Última tentativa falhou</p>
@@ -122,10 +125,10 @@ export function MeetingDetailPage() {
                 <Link
                   key={lead.id}
                   to={`/crm/${lead.id}`}
-                  className="flex items-center justify-between rounded-lg border border-ink-100 px-3 py-2 hover:bg-ink-50"
+                  className="flex items-center justify-between rounded-lg border border-ink-100 px-3 py-2 hover:bg-ink-50 dark:border-ink-800 dark:hover:bg-ink-800/60"
                 >
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-medium text-ink-800">{lead.companyName}</p>
+                    <p className="truncate text-sm font-medium text-ink-800 dark:text-white">{lead.companyName}</p>
                     <p className="truncate text-xs text-ink-400">{lead.contactName}</p>
                   </div>
                   <TemperatureBadge temperature={lead.temperature} />
@@ -145,8 +148,8 @@ export function MeetingDetailPage() {
               ) : (
                 <ul className="space-y-1.5">
                   {meeting.participants.map((p) => (
-                    <li key={p} className="flex items-center gap-2 text-sm text-ink-700">
-                      <Users className="h-3.5 w-3.5 text-ink-300" />
+                    <li key={p} className="flex items-center gap-2 text-sm text-ink-700 dark:text-ink-300">
+                      <Users className="h-3.5 w-3.5 text-ink-300 dark:text-ink-600" />
                       {p}
                     </li>
                   ))}
@@ -168,12 +171,12 @@ function PastAnalysesSummary({
   summary: string | null
 }) {
   return (
-    <div className="mb-4 rounded-lg border border-ink-100 bg-white p-4">
+    <div className="mb-4 rounded-lg border border-ink-100 bg-white p-4 dark:border-ink-800 dark:bg-ink-900">
       <p className="text-xs font-semibold uppercase tracking-wide text-ink-400">Última análise</p>
-      {summary && <p className="mt-1.5 text-sm text-ink-700">{summary}</p>}
+      {summary && <p className="mt-1.5 text-sm text-ink-700 dark:text-ink-300">{summary}</p>}
       <ul className="mt-3 space-y-1.5">
         {analyses.map((a) => (
-          <li key={a.id} className="flex items-center justify-between text-xs text-ink-500">
+          <li key={a.id} className="flex items-center justify-between text-xs text-ink-500 dark:text-ink-400">
             <span>Score {a.scoreBefore} → {a.scoreAfter}</span>
             <span className="text-ink-400">confiança {Math.round(a.confidence * 100)}%</span>
           </li>

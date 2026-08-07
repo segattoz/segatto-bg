@@ -90,19 +90,22 @@ export function AudioCapture({
 
   if (audio) {
     return (
-      <div className="rounded-xl border border-ink-200 bg-white p-6">
-        <div className="flex items-center gap-4">
-          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
-            <FileAudio className="h-6 w-6" />
+      <div className="animate-fade-in-up rounded-xl border border-ink-200 bg-white p-4 dark:border-ink-700 dark:bg-ink-900 sm:p-6">
+        <div className="flex items-center gap-3 sm:gap-4">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600 dark:bg-brand-500/15 dark:text-brand-400 sm:h-12 sm:w-12">
+            <FileAudio className="h-5 w-5 sm:h-6 sm:w-6" />
           </span>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-semibold text-ink-900">{audio.filename}</p>
+            <p className="truncate text-sm font-semibold text-ink-900 dark:text-white">{audio.filename}</p>
             <p className="text-xs text-ink-400">
               {formatDuration(audio.duration)} · {formatFileSize(audio.size)}
             </p>
           </div>
           {!analyzing && (
-            <button onClick={clearAudio} className="rounded-md p-1.5 text-ink-400 hover:bg-ink-100 hover:text-ink-700">
+            <button
+              onClick={clearAudio}
+              className="rounded-md p-1.5 text-ink-400 hover:bg-ink-100 hover:text-ink-700 dark:hover:bg-ink-800 dark:hover:text-white"
+            >
               <X className="h-4 w-4" />
             </button>
           )}
@@ -122,14 +125,14 @@ export function AudioCapture({
   }
 
   return (
-    <div className="rounded-xl border-2 border-dashed border-ink-200 bg-ink-50/50 p-8 text-center">
+    <div className="rounded-xl border-2 border-dashed border-ink-200 bg-ink-50/50 p-5 text-center dark:border-ink-700 dark:bg-ink-800/30 sm:p-8">
       {isRecording ? (
         <div className="flex flex-col items-center gap-4 py-4">
-          <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-negative-50">
+          <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-negative-50 dark:bg-negative-500/15">
             <span className="absolute inline-flex h-16 w-16 animate-ping rounded-full bg-negative-400 opacity-20" />
-            <Mic className="h-7 w-7 text-negative-500" />
+            <Mic className="h-7 w-7 text-negative-500 dark:text-negative-400" />
           </div>
-          <p className="font-mono text-lg font-semibold text-ink-900">{formatDuration(recordingSeconds)}</p>
+          <p className="font-mono text-lg font-semibold text-ink-900 dark:text-white">{formatDuration(recordingSeconds)}</p>
           <Button variant="danger" icon={<Square className="h-3.5 w-3.5" />} onClick={stopRecording}>
             Parar gravação
           </Button>
@@ -137,15 +140,21 @@ export function AudioCapture({
       ) : (
         <div className="flex flex-col items-center gap-5 py-4">
           <div>
-            <p className="text-base font-semibold text-ink-900">Envie sua percepção sobre a reunião</p>
+            <p className="text-base font-semibold text-ink-900 dark:text-white">Envie sua percepção sobre a reunião</p>
             <p className="mt-1 text-sm text-ink-400">Grave um áudio ou envie um arquivo — só isso, o resto o sistema resolve.</p>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <Button size="lg" icon={<Mic className="h-4 w-4" />} onClick={() => void startRecording()}>
+          <div className="flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row sm:flex-wrap">
+            <Button size="lg" className="w-full sm:w-auto" icon={<Mic className="h-4 w-4" />} onClick={() => void startRecording()}>
               Gravar áudio
             </Button>
-            <Button size="lg" variant="secondary" icon={<Upload className="h-4 w-4" />} onClick={() => fileInputRef.current?.click()}>
+            <Button
+              size="lg"
+              variant="secondary"
+              className="w-full sm:w-auto"
+              icon={<Upload className="h-4 w-4" />}
+              onClick={() => fileInputRef.current?.click()}
+            >
               Enviar arquivo de áudio
             </Button>
             <input
@@ -161,16 +170,16 @@ export function AudioCapture({
         </div>
       )}
 
-      {error && <p className={cn('mt-4 text-sm text-negative-600')}>{error}</p>}
+      {error && <p className={cn('mt-4 text-sm text-negative-600 dark:text-negative-400')}>{error}</p>}
     </div>
   )
 }
 
 export function AnalyzingOverlay() {
   return (
-    <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-ink-100 bg-white py-12">
+    <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-ink-100 bg-white py-12 dark:border-ink-800 dark:bg-ink-900">
       <Spinner className="h-6 w-6 text-brand-500" />
-      <p className="text-sm font-medium text-ink-700">Analisando reunião e reorganizando seus leads…</p>
+      <p className="text-sm font-medium text-ink-700 dark:text-ink-200">Analisando reunião e reorganizando seus leads…</p>
       <p className="text-xs text-ink-400">Isso pode levar alguns segundos.</p>
     </div>
   )

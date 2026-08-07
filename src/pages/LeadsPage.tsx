@@ -25,7 +25,7 @@ export function LeadsPage() {
         title="CRM"
         subtitle="Todos os seus leads, priorizados automaticamente por score."
         actions={
-          <div className="flex items-center rounded-lg border border-ink-200 p-0.5">
+          <div className="flex items-center rounded-lg border border-ink-200 p-0.5 dark:border-ink-700">
             <ToggleButton active={view === 'list'} onClick={() => setView('list')} icon={<List className="h-3.5 w-3.5" />} label="Lista" />
             <ToggleButton
               active={view === 'kanban'}
@@ -38,7 +38,7 @@ export function LeadsPage() {
       />
 
       {view === 'list' ? (
-        <div className="flex-1 overflow-y-auto p-8">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-8">
           <LeadsTable leads={leads} />
         </div>
       ) : (
@@ -66,7 +66,9 @@ function ToggleButton({
       onClick={onClick}
       className={cn(
         'flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors',
-        active ? 'bg-ink-900 text-white' : 'text-ink-500 hover:bg-ink-50',
+        active
+          ? 'bg-ink-900 text-white dark:bg-brand-500'
+          : 'text-ink-500 hover:bg-ink-50 dark:text-ink-400 dark:hover:bg-ink-800',
       )}
     >
       {icon}

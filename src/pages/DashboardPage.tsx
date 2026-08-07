@@ -24,8 +24,8 @@ export function DashboardPage() {
     <div>
       <PageHeader title="Dashboard" subtitle={`Bem-vindo de volta, ${firstName}. Aqui está o panorama comercial.`} />
 
-      <div className="space-y-6 p-8">
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-6">
+      <div className="space-y-5 p-4 sm:space-y-6 sm:p-8">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 xl:grid-cols-6">
           <StatCard label="Total de leads" value={leads.length} icon={<Users className="h-4 w-4" />} accent="brand" />
           <StatCard label="Leads quentes" value={hot} icon={<Flame className="h-4 w-4" />} accent="hot" />
           <StatCard label="Leads mornos" value={warm} icon={<Thermometer className="h-4 w-4" />} accent="warm" />
@@ -80,13 +80,13 @@ function TemperatureBar({
   return (
     <div>
       <div className="mb-1.5 flex items-center justify-between text-sm">
-        <span className="font-medium text-ink-700">{label}</span>
+        <span className="font-medium text-ink-700 dark:text-ink-200">{label}</span>
         <span className="text-ink-400">
           {count} · {pct}%
         </span>
       </div>
-      <div className="h-2 w-full overflow-hidden rounded-full bg-ink-100">
-        <div className={`h-full rounded-full ${colorClass}`} style={{ width: `${pct}%` }} />
+      <div className="h-2 w-full overflow-hidden rounded-full bg-ink-100 dark:bg-ink-800">
+        <div className={`h-full rounded-full transition-[width] duration-500 ${colorClass}`} style={{ width: `${pct}%` }} />
       </div>
     </div>
   )

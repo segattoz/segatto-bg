@@ -32,17 +32,18 @@ export function MeetingsPage() {
         }
       />
 
-      <div className="space-y-3 p-8">
-        {sorted.map((meeting) => (
+      <div className="space-y-3 p-4 sm:p-8">
+        {sorted.map((meeting, i) => (
           <Card
             key={meeting.id}
-            className="cursor-pointer p-5 transition-colors hover:border-ink-200"
+            style={{ animationDelay: `${Math.min(i, 8) * 40}ms` }}
+            className="animate-fade-in-up cursor-pointer p-4 transition-colors hover:border-ink-200 dark:hover:border-ink-700 sm:p-5"
             onClick={() => navigate(`/reunioes/${meeting.id}`)}
           >
             <div className="flex items-start justify-between gap-4">
               <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <h3 className="font-semibold text-ink-900">{meeting.title}</h3>
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3 className="font-semibold text-ink-900 dark:text-white">{meeting.title}</h3>
                   <MeetingStatusBadge status={meeting.status} />
                 </div>
                 <p className="mt-1 text-sm text-ink-400">
@@ -50,7 +51,10 @@ export function MeetingsPage() {
                 </p>
                 <div className="mt-3 flex flex-wrap gap-1.5">
                   {meeting.leadIds.map((id) => (
-                    <span key={id} className="rounded-full bg-ink-100 px-2.5 py-1 text-xs font-medium text-ink-600">
+                    <span
+                      key={id}
+                      className="rounded-full bg-ink-100 px-2.5 py-1 text-xs font-medium text-ink-600 dark:bg-ink-800 dark:text-ink-300"
+                    >
                       {leadNameById.get(id) ?? 'Lead removido'}
                     </span>
                   ))}
