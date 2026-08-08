@@ -97,7 +97,7 @@ export function NewMeetingDialog({
                   onChange={() => toggleLead(lead.id)}
                   className="h-4 w-4 rounded border-ink-300 text-brand-500 focus:ring-brand-400 dark:border-ink-600 dark:bg-ink-800"
                 />
-                {lead.companyName}
+                {lead.fullName}
               </label>
             ))}
           </div>

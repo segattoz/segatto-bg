@@ -50,18 +50,22 @@ export function temperatureFromScore(score: number): LeadTemperature {
 export interface Lead {
   id: string
   userId: string
-  companyName: string
-  contactName: string
+  /** Full name of the prospect — every lead is an individual (pessoa física). */
+  fullName: string
   jobTitle: string | null
   phone: string | null
   email: string | null
   source: string | null
+  /** Name of the person who referred this lead, when the channel was a personal referral. */
+  referredBy: string | null
   status: LeadStatus
   temperature: LeadTemperature
   score: number
   ranking: number | null
   previousRanking: number | null
   insights: string[]
+  /** Insurance products/coverages recommended for this lead by the last analysis. */
+  recommendedProducts: string[]
   nextAction: string | null
   nextActionDeadline: string | null
   responsibleName: string | null

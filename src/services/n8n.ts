@@ -32,8 +32,7 @@ export function buildAnalysisRequest(
     },
     leads: leads.map((lead) => ({
       id: lead.id,
-      company: lead.companyName,
-      contact_name: lead.contactName,
+      full_name: lead.fullName,
       status: lead.status,
       current_score: lead.score,
       current_temperature: lead.temperature,
@@ -117,6 +116,19 @@ const NEGATIVE_TERMS = [
   'prêmio alto',
 ]
 
+/** Keyword -> product recommendation. Checked in order against the meeting window. */
+const RECOMMENDATION_RULES: { keywords: string[]; product: string }[] = [
+  { keywords: ['invalidez'], product: 'Cobertura por Invalidez Funcional por Doença (IFPD)' },
+  {
+    keywords: ['financiamento', 'imóvel', 'imobiliário', 'prestamista'],
+    product: 'Seguro Prestamista atrelado ao financiamento',
+  },
+  { keywords: ['doença grave', 'doenças graves'], product: 'Cobertura por Doenças Graves' },
+  { keywords: ['filho', 'filhos', 'educação'], product: 'Seguro Educacional para os filhos' },
+  { keywords: ['acidente', 'acidental'], product: 'Cobertura por Morte Acidental' },
+  { keywords: ['sócio', 'sócios', 'key-man', 'empresarial'], product: 'Seguro de Vida Individual Empresarial (Key-Man)' },
+]
+
 function findWindow(text: string, term: string, radius = 220): string {
   const idx = text.toLowerCase().indexOf(term.toLowerCase())
   if (idx === -1) return text
@@ -131,19 +143,31 @@ function countMatches(text: string, terms: string[]): { count: number; hits: str
   return { count: hits.length, hits }
 }
 
-function buildReason(
-  companyName: string,
-  positiveHits: string[],
-  negativeHits: string[],
-  delta: number,
-): string {
+/**
+ * Suggests which life insurance products/coverages make sense for this lead
+ * based on what was actually said around their name in the meeting, plus a
+ * baseline capital segurado scaled to how qualified the lead looks so far.
+ */
+function buildRecommendations(window: string, score: number): string[] {
+  const lower = window.toLowerCase()
+  const products = RECOMMENDATION_RULES.filter((rule) => rule.keywords.some((k) => lower.includes(k))).map(
+    (rule) => rule.product,
+  )
+
+  const suggestedCapital = score >= 70 ? 'R$ 500 mil' : score >= 40 ? 'R$ 250 mil' : 'R$ 100 mil'
+  products.unshift(`Seguro de Vida Individual com capital segurado sugerido de ${suggestedCapital}`)
+
+  return [...new Set(products)].slice(0, 4)
+}
+
+function buildReason(fullName: string, positiveHits: string[], negativeHits: string[], delta: number): string {
   if (delta > 0 && positiveHits.length > 0) {
-    return `${companyName} demonstrou sinais positivos na reunião (${positiveHits.slice(0, 2).join(', ')}), o que justifica o avanço no ranking.`
+    return `${fullName} demonstrou sinais positivos na reunião (${positiveHits.slice(0, 2).join(', ')}), o que justifica o avanço no ranking.`
   }
   if (delta < 0 && negativeHits.length > 0) {
-    return `${companyName} apresentou sinais de menor prioridade na reunião (${negativeHits.slice(0, 2).join(', ')}), reduzindo a pontuação.`
+    return `${fullName} apresentou sinais de menor prioridade na reunião (${negativeHits.slice(0, 2).join(', ')}), reduzindo a pontuação.`
   }
-  return `Nenhuma mudança relevante identificada para ${companyName} nesta reunião; mantendo classificação atual.`
+  return `Nenhuma mudança relevante identificada para ${fullName} nesta reunião; mantendo classificação atual.`
 }
 
 function buildNextAction(temperature: Lead['temperature']): { action: string; days: number } {
@@ -160,15 +184,16 @@ function addDays(base: string, days: number): string {
 
 /**
  * Produces a plausible N8nAnalysisResponse by scanning the meeting minutes
- * for simple positive/negative signal words near each lead's company name.
- * This is only used in MOCK MODE (no n8n webhook configured) so the demo
- * feels connected to what was actually typed into the ata, not random.
+ * for simple positive/negative signal words near each lead's name, and
+ * deriving product recommendations from the same window. This is only used
+ * in MOCK MODE (no n8n webhook configured) so the demo feels connected to
+ * what was actually typed into the ata, not random.
  */
 async function generateMockAnalysisResponse(request: N8nAnalysisRequest): Promise<N8nAnalysisResponse> {
   await delay(1000)
 
   const scored = request.leads.map((lead) => {
-    const window = findWindow(request.meeting.minutes, lead.company)
+    const window = findWindow(request.meeting.minutes, lead.full_name)
     const positive = countMatches(window, POSITIVE_TERMS)
     const negative = countMatches(window, NEGATIVE_TERMS)
     const delta = positive.count * 7 - negative.count * 6
@@ -189,10 +214,11 @@ async function generateMockAnalysisResponse(request: N8nAnalysisRequest): Promis
         score,
         temperature,
         confidence: Math.round((0.72 + Math.random() * 0.23) * 100) / 100,
-        reason: buildReason(lead.company, positive.hits, negative.hits, delta),
+        reason: buildReason(lead.full_name, positive.hits, negative.hits, delta),
         next_action: action,
         next_action_deadline: addDays(request.meeting.date, days),
         insights,
+        recommended_products: buildRecommendations(window, score),
       },
     }
   })
@@ -208,7 +234,7 @@ async function generateMockAnalysisResponse(request: N8nAnalysisRequest): Promis
   const topGainer = [...scored].sort((a, b) => b.delta - a.delta)[0]
   const summary = topGainer
     ? `A reunião "${request.meeting.title}" indicou avanço para ${
-        request.leads.find((l) => l.id === topGainer.leadId)?.company ?? 'um dos leads'
+        request.leads.find((l) => l.id === topGainer.leadId)?.full_name ?? 'um dos leads'
       }, com ${leads.length} lead(s) reavaliado(s) com base no relato enviado.`
     : `Reunião "${request.meeting.title}" processada com ${leads.length} lead(s) reavaliado(s).`
 

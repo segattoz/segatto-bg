@@ -5,18 +5,19 @@ import type { Lead, LeadAnalysis, LeadHistoryEntry, Meeting } from '@/types'
 export interface LeadRow {
   id: string
   user_id: string
-  company_name: string
-  contact_name: string
+  full_name: string
   job_title: string | null
   phone: string | null
   email: string | null
   source: string | null
+  referred_by: string | null
   status: Lead['status']
   temperature: Lead['temperature']
   score: number
   ranking: number | null
   previous_ranking: number | null
   insights: string[] | null
+  recommended_products: string[] | null
   next_action: string | null
   next_action_deadline: string | null
   responsible_name: string | null
@@ -55,6 +56,7 @@ export interface LeadAnalysisRow {
   next_action: string | null
   next_action_deadline: string | null
   insights: string[] | null
+  recommended_products: string[] | null
   created_at: string
 }
 
@@ -71,18 +73,19 @@ export function leadFromRow(row: LeadRow): Lead {
   return {
     id: row.id,
     userId: row.user_id,
-    companyName: row.company_name,
-    contactName: row.contact_name,
+    fullName: row.full_name,
     jobTitle: row.job_title,
     phone: row.phone,
     email: row.email,
     source: row.source,
+    referredBy: row.referred_by,
     status: row.status,
     temperature: row.temperature,
     score: row.score,
     ranking: row.ranking,
     previousRanking: row.previous_ranking,
     insights: row.insights ?? [],
+    recommendedProducts: row.recommended_products ?? [],
     nextAction: row.next_action,
     nextActionDeadline: row.next_action_deadline,
     responsibleName: row.responsible_name,
@@ -94,18 +97,19 @@ export function leadFromRow(row: LeadRow): Lead {
 
 export function leadToRow(lead: Partial<Lead>): Partial<LeadRow> {
   const row: Partial<LeadRow> = {}
-  if (lead.companyName !== undefined) row.company_name = lead.companyName
-  if (lead.contactName !== undefined) row.contact_name = lead.contactName
+  if (lead.fullName !== undefined) row.full_name = lead.fullName
   if (lead.jobTitle !== undefined) row.job_title = lead.jobTitle
   if (lead.phone !== undefined) row.phone = lead.phone
   if (lead.email !== undefined) row.email = lead.email
   if (lead.source !== undefined) row.source = lead.source
+  if (lead.referredBy !== undefined) row.referred_by = lead.referredBy
   if (lead.status !== undefined) row.status = lead.status
   if (lead.temperature !== undefined) row.temperature = lead.temperature
   if (lead.score !== undefined) row.score = lead.score
   if (lead.ranking !== undefined) row.ranking = lead.ranking
   if (lead.previousRanking !== undefined) row.previous_ranking = lead.previousRanking
   if (lead.insights !== undefined) row.insights = lead.insights
+  if (lead.recommendedProducts !== undefined) row.recommended_products = lead.recommendedProducts
   if (lead.nextAction !== undefined) row.next_action = lead.nextAction
   if (lead.nextActionDeadline !== undefined) row.next_action_deadline = lead.nextActionDeadline
   if (lead.responsibleName !== undefined) row.responsible_name = lead.responsibleName
@@ -161,6 +165,7 @@ export function analysisFromRow(row: LeadAnalysisRow): LeadAnalysis {
     nextAction: row.next_action,
     nextActionDeadline: row.next_action_deadline,
     insights: row.insights ?? [],
+    recommendedProducts: row.recommended_products ?? [],
     createdAt: row.created_at,
   }
 }

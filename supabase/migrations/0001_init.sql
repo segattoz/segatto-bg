@@ -67,18 +67,24 @@ create type public.lead_temperature as enum ('hot', 'warm', 'cold');
 create table if not exists public.leads (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references auth.users (id) on delete cascade,
-  company_name text not null,
-  contact_name text not null,
+  -- Every lead is a pessoa física (individual) — life insurance here is
+  -- sold person-to-person, not to companies.
+  full_name text not null,
   job_title text,
   phone text,
   email text,
   source text,
+  -- Name of the person who referred this lead, when the channel was a
+  -- personal referral (the primary acquisition channel for this business).
+  referred_by text,
   status public.lead_status not null default 'novo',
   temperature public.lead_temperature not null default 'cold',
   score integer not null default 0 check (score between 0 and 100),
   ranking integer,
   previous_ranking integer,
   insights jsonb not null default '[]'::jsonb,
+  -- Life insurance products/coverages recommended by the last analysis.
+  recommended_products jsonb not null default '[]'::jsonb,
   next_action text,
   next_action_deadline date,
   responsible_name text,
@@ -164,6 +170,7 @@ create table if not exists public.lead_analysis (
   next_action text,
   next_action_deadline date,
   insights jsonb not null default '[]'::jsonb,
+  recommended_products jsonb not null default '[]'::jsonb,
   created_at timestamptz not null default now()
 );
 

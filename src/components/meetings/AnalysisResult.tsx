@@ -1,4 +1,4 @@
-import { ArrowUp, ArrowDown, Minus, CheckCircle2, CalendarClock } from 'lucide-react'
+import { ArrowUp, ArrowDown, Minus, CheckCircle2, CalendarClock, ShieldCheck } from 'lucide-react'
 import { TemperatureBadge } from '@/components/ui/Badge'
 import { Card, CardBody } from '@/components/ui/Card'
 import { formatDate } from '@/lib/format'
@@ -35,7 +35,7 @@ export function AnalysisResult({ result }: { result: MeetingAnalysisResult }) {
                     </span>
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2">
-                        <p className="font-semibold text-ink-900 dark:text-white">{change.companyName}</p>
+                        <p className="font-semibold text-ink-900 dark:text-white">{change.fullName}</p>
                         <TemperatureBadge temperature={change.temperatureAfter} />
                         <span className="text-sm font-semibold tabular-nums text-ink-900 dark:text-white">Score: {change.scoreAfter}</span>
                         {delta !== null && delta !== 0 && (
@@ -59,6 +59,25 @@ export function AnalysisResult({ result }: { result: MeetingAnalysisResult }) {
                         <span className="font-medium text-ink-700 dark:text-ink-200">Motivo: </span>
                         {change.reason}
                       </p>
+
+                      {change.recommendedProducts.length > 0 && (
+                        <div className="mt-3">
+                          <p className="mb-1.5 text-xs font-medium text-ink-500 dark:text-ink-400">
+                            Recomendações para esta reunião
+                          </p>
+                          <ul className="space-y-1.5">
+                            {change.recommendedProducts.map((product, pi) => (
+                              <li
+                                key={pi}
+                                className="flex items-start gap-2 rounded-lg bg-brand-50 px-3 py-2 text-xs font-medium text-brand-700 dark:bg-brand-500/10 dark:text-brand-300"
+                              >
+                                <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                                {product}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
 
                       <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-ink-400">
                         <span>

@@ -128,8 +128,8 @@ export function MeetingDetailPage() {
                   className="flex items-center justify-between rounded-lg border border-ink-100 px-3 py-2 hover:bg-ink-50 dark:border-ink-800 dark:hover:bg-ink-800/60"
                 >
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-medium text-ink-800 dark:text-white">{lead.companyName}</p>
-                    <p className="truncate text-xs text-ink-400">{lead.contactName}</p>
+                    <p className="truncate text-sm font-medium text-ink-800 dark:text-white">{lead.fullName}</p>
+                    <p className="truncate text-xs text-ink-400">{lead.jobTitle ?? '—'}</p>
                   </div>
                   <TemperatureBadge temperature={lead.temperature} />
                 </Link>

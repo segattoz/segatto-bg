@@ -26,8 +26,8 @@ export function TopLeadsCard({ leads }: { leads: Lead[] }) {
                   {index + 1}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium text-ink-900 dark:text-white">{lead.companyName}</p>
-                  <p className="truncate text-xs text-ink-400">{lead.contactName}</p>
+                  <p className="truncate text-sm font-medium text-ink-900 dark:text-white">{lead.fullName}</p>
+                  <p className="truncate text-xs text-ink-400">{lead.jobTitle ?? '—'}</p>
                 </div>
                 <TemperatureBadge temperature={lead.temperature} className="hidden sm:inline-flex" />
                 <span className="w-12 shrink-0 text-right text-sm font-semibold tabular-nums text-ink-900 dark:text-white sm:w-14">

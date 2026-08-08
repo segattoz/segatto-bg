@@ -15,6 +15,8 @@ export interface LeadAnalysis {
   nextAction: string | null
   nextActionDeadline: string | null
   insights: string[]
+  /** Insurance products/coverages the analysis judged relevant for this lead. */
+  recommendedProducts: string[]
   createdAt: string
 }
 
@@ -42,8 +44,7 @@ export interface LeadHistoryEntry {
 /** Minimal lead snapshot sent to n8n — no unrelated CRM fields. */
 export interface N8nLeadSnapshot {
   id: string
-  company: string
-  contact_name: string
+  full_name: string
   status: string
   current_score: number
   current_temperature: LeadTemperature
@@ -74,6 +75,8 @@ export interface N8nLeadResult {
   next_action: string
   next_action_deadline: string | null
   insights: string[]
+  /** Life insurance products/coverages recommended for this lead based on the meeting. */
+  recommended_products: string[]
 }
 
 export interface N8nAnalysisResponse {
@@ -85,7 +88,7 @@ export interface N8nAnalysisResponse {
 /** Client-side view combining the n8n result with before/after ranking deltas. */
 export interface RankingChange {
   leadId: string
-  companyName: string
+  fullName: string
   scoreBefore: number
   scoreAfter: number
   temperatureBefore: LeadTemperature
@@ -98,6 +101,7 @@ export interface RankingChange {
   nextAction: string
   nextActionDeadline: string | null
   insights: string[]
+  recommendedProducts: string[]
 }
 
 export interface MeetingAnalysisResult {

@@ -16,7 +16,7 @@ export function MeetingsPage() {
   const navigate = useNavigate()
   const [dialogOpen, setDialogOpen] = useState(false)
 
-  const leadNameById = new Map(leads.map((l) => [l.id, l.companyName]))
+  const leadNameById = new Map(leads.map((l) => [l.id, l.fullName]))
 
   const sorted = [...meetings].sort((a, b) => b.meetingDate.localeCompare(a.meetingDate))
 

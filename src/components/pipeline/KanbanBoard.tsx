@@ -79,9 +79,9 @@ export function KanbanBoard({
                               to={`/crm/${lead.id}`}
                               className="block text-sm font-semibold text-ink-900 hover:text-brand-600 dark:text-white dark:hover:text-brand-400"
                             >
-                              {lead.companyName}
+                              {lead.fullName}
                             </Link>
-                            <p className="mt-0.5 truncate text-xs text-ink-400">{lead.responsibleName ?? lead.contactName}</p>
+                            <p className="mt-0.5 truncate text-xs text-ink-400">{lead.responsibleName ?? '—'}</p>
                             <div className="mt-2.5 flex items-center justify-between">
                               <TemperatureBadge temperature={lead.temperature} />
                               <span className="text-sm font-semibold tabular-nums text-ink-900 dark:text-white">{lead.score}</span>

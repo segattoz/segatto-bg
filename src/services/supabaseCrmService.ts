@@ -187,6 +187,7 @@ export const supabaseCrmService: CRMService = {
         temperature: result.temperature,
         previousRanking: rankingBefore,
         insights: result.insights,
+        recommendedProducts: result.recommended_products,
         nextAction: result.next_action,
         nextActionDeadline: result.next_action_deadline,
       })
@@ -205,6 +206,7 @@ export const supabaseCrmService: CRMService = {
         next_action: result.next_action,
         next_action_deadline: result.next_action_deadline,
         insights: result.insights,
+        recommended_products: result.recommended_products,
       })
 
       await supabaseCrmService.addLeadHistory({
@@ -234,7 +236,7 @@ export const supabaseCrmService: CRMService = {
 
       changes.push({
         leadId: lead.id,
-        companyName: lead.companyName,
+        fullName: lead.fullName,
         scoreBefore,
         scoreAfter: result.score,
         temperatureBefore,
@@ -247,6 +249,7 @@ export const supabaseCrmService: CRMService = {
         nextAction: result.next_action,
         nextActionDeadline: result.next_action_deadline,
         insights: result.insights,
+        recommendedProducts: result.recommended_products,
       })
     }
 

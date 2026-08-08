@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
-import { ArrowLeft, Briefcase, Mail, Phone, Tag, User, CalendarClock, ArrowUp, ArrowDown, Minus } from 'lucide-react'
+import { ArrowLeft, Briefcase, Mail, Phone, Tag, User, Users, CalendarClock, ArrowUp, ArrowDown, Minus, ShieldCheck } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardBody } from '@/components/ui/Card'
 import { TemperatureBadge, StatusBadge } from '@/components/ui/Badge'
 import { HistoryTimeline } from '@/components/leads/HistoryTimeline'
@@ -35,13 +35,13 @@ export function LeadDetailPage() {
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-            <h1 className="text-xl font-semibold tracking-tight text-ink-900 dark:text-white sm:text-2xl">{lead.companyName}</h1>
+            <h1 className="text-xl font-semibold tracking-tight text-ink-900 dark:text-white sm:text-2xl">{lead.fullName}</h1>
             <TemperatureBadge temperature={lead.temperature} />
             <StatusBadge status={lead.status} />
           </div>
           <p className="mt-1 text-sm text-ink-400">
-            {lead.contactName}
-            {lead.jobTitle ? ` · ${lead.jobTitle}` : ''}
+            {lead.jobTitle ?? 'Profissão não informada'}
+            {lead.referredBy ? ` · Indicado por ${lead.referredBy}` : ''}
           </p>
         </div>
         <div className="sm:text-right">
@@ -57,11 +57,11 @@ export function LeadDetailPage() {
               <CardTitle>Dados</CardTitle>
             </CardHeader>
             <CardBody className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <Field icon={User} label="Nome do contato" value={lead.contactName} />
               <Field icon={Briefcase} label="Profissão / Cargo" value={lead.jobTitle ?? '—'} />
               <Field icon={Phone} label="Telefone" value={lead.phone ?? '—'} />
               <Field icon={Mail} label="E-mail" value={lead.email ?? '—'} />
               <Field icon={Tag} label="Origem" value={lead.source ?? '—'} />
+              <Field icon={Users} label="Indicado por" value={lead.referredBy ?? '—'} />
               <Field icon={User} label="Responsável" value={lead.responsibleName ?? '—'} />
             </CardBody>
           </Card>
@@ -79,6 +79,32 @@ export function LeadDetailPage() {
                     <li key={i} className="flex items-start gap-2 text-sm text-ink-700 dark:text-ink-300">
                       <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-400" />
                       {insight}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </CardBody>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Recomendações</CardTitle>
+            </CardHeader>
+            <CardBody>
+              {lead.recommendedProducts.length === 0 ? (
+                <p className="text-sm text-ink-400">
+                  Nenhuma recomendação ainda. Após a próxima reunião analisada, os produtos de seguro mais adequados
+                  aparecem aqui.
+                </p>
+              ) : (
+                <ul className="space-y-2">
+                  {lead.recommendedProducts.map((product, i) => (
+                    <li
+                      key={i}
+                      className="flex items-start gap-2 rounded-lg bg-brand-50 px-3 py-2 text-sm text-brand-700 dark:bg-brand-500/10 dark:text-brand-300"
+                    >
+                      <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0" />
+                      {product}
                     </li>
                   ))}
                 </ul>

@@ -6,7 +6,7 @@ import { formatDate } from '@/lib/format'
 import { TemperatureBadge, StatusBadge } from '@/components/ui/Badge'
 import type { Lead, LeadTemperature } from '@/types'
 
-type SortKey = 'ranking' | 'score' | 'temperature' | 'lastMeetingAt' | 'companyName' | 'createdAt'
+type SortKey = 'ranking' | 'score' | 'temperature' | 'lastMeetingAt' | 'fullName' | 'createdAt'
 type SortDirection = 'asc' | 'desc'
 
 const TEMPERATURE_WEIGHT: Record<LeadTemperature, number> = { hot: 2, warm: 1, cold: 0 }
@@ -41,8 +41,8 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
         case 'lastMeetingAt':
           result = (a.lastMeetingAt ?? '').localeCompare(b.lastMeetingAt ?? '')
           break
-        case 'companyName':
-          result = a.companyName.localeCompare(b.companyName)
+        case 'fullName':
+          result = a.fullName.localeCompare(b.fullName)
           break
         case 'createdAt':
           result = a.createdAt.localeCompare(b.createdAt)
@@ -67,7 +67,7 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
             <option value="score">Score</option>
             <option value="temperature">Temperatura</option>
             <option value="lastMeetingAt">Última interação</option>
-            <option value="companyName">Nome</option>
+            <option value="fullName">Nome</option>
             <option value="createdAt">Data de criação</option>
           </select>
           <button
@@ -93,10 +93,10 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
               </span>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between gap-2">
-                  <p className="truncate font-medium text-ink-900 dark:text-white">{lead.companyName}</p>
+                  <p className="truncate font-medium text-ink-900 dark:text-white">{lead.fullName}</p>
                   <span className="shrink-0 font-semibold tabular-nums text-ink-900 dark:text-white">{lead.score}</span>
                 </div>
-                <p className="mt-0.5 truncate text-xs text-ink-400">{lead.contactName}</p>
+                <p className="mt-0.5 truncate text-xs text-ink-400">{lead.jobTitle ?? lead.source ?? '—'}</p>
                 <div className="mt-2 flex flex-wrap items-center gap-1.5">
                   <TemperatureBadge temperature={lead.temperature} />
                   <StatusBadge status={lead.status} />
@@ -115,8 +115,9 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
           <thead>
             <tr className="border-b border-ink-100 bg-ink-50/60 text-left text-xs font-medium uppercase tracking-wide text-ink-400 dark:border-ink-800 dark:bg-ink-800/40">
               <Th label="#" />
-              <SortableTh label="Cliente" sortKey="companyName" active={sortKey} direction={direction} onClick={toggleSort} />
-              <Th label="Contato" />
+              <SortableTh label="Cliente" sortKey="fullName" active={sortKey} direction={direction} onClick={toggleSort} />
+              <Th label="Profissão" />
+              <Th label="Indicado por" />
               <Th label="Telefone" />
               <Th label="E-mail" />
               <Th label="Status" />
@@ -137,10 +138,11 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
                 </td>
                 <td className="px-4 py-3">
                   <Link to={`/crm/${lead.id}`} className="font-medium text-ink-900 hover:text-brand-600 dark:text-white dark:hover:text-brand-400">
-                    {lead.companyName}
+                    {lead.fullName}
                   </Link>
                 </td>
-                <td className="px-4 py-3 text-ink-600 dark:text-ink-300">{lead.contactName}</td>
+                <td className="px-4 py-3 text-ink-600 dark:text-ink-300">{lead.jobTitle ?? '—'}</td>
+                <td className="px-4 py-3 text-ink-600 dark:text-ink-300">{lead.referredBy ?? '—'}</td>
                 <td className="px-4 py-3 whitespace-nowrap text-ink-500 dark:text-ink-400">{lead.phone ?? '—'}</td>
                 <td className="px-4 py-3 text-ink-500 dark:text-ink-400">{lead.email ?? '—'}</td>
                 <td className="px-4 py-3">

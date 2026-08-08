@@ -107,6 +107,7 @@ function applyAnalysis(meetingId: string, response: N8nAnalysisResponse): Meetin
       temperature: result.temperature,
       previousRanking: rankingBefore,
       insights: result.insights,
+      recommendedProducts: result.recommended_products,
       nextAction: result.next_action,
       nextActionDeadline: result.next_action_deadline,
       lastMeetingAt: meeting.meetingDate,
@@ -126,6 +127,7 @@ function applyAnalysis(meetingId: string, response: N8nAnalysisResponse): Meetin
       nextAction: result.next_action,
       nextActionDeadline: result.next_action_deadline,
       insights: result.insights,
+      recommendedProducts: result.recommended_products,
     })
 
     store.addHistory({
@@ -155,7 +157,7 @@ function applyAnalysis(meetingId: string, response: N8nAnalysisResponse): Meetin
 
     changes.push({
       leadId: lead.id,
-      companyName: lead.companyName,
+      fullName: lead.fullName,
       scoreBefore,
       scoreAfter: result.score,
       temperatureBefore,
@@ -168,6 +170,7 @@ function applyAnalysis(meetingId: string, response: N8nAnalysisResponse): Meetin
       nextAction: result.next_action,
       nextActionDeadline: result.next_action_deadline,
       insights: result.insights,
+      recommendedProducts: result.recommended_products,
     })
   }
 
